@@ -11,7 +11,7 @@ const Track = ({ item }) => {
         width="275px"
         height="275px"
         />
-        <h2>{item.name</h2>
+        <h2>{item.name}</h2>
         <h3>{item.album.name}</h3>
         <p>{item.artists[0].name}</p>
         <div>
