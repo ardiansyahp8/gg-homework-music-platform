@@ -9,7 +9,10 @@ function App() {
     <div className="App">
     {
       data.map((item) => (
-        <Track item={item} />
+        <Track
+          key={item.id}
+          item={item}
+        />
       ))
     }
     <br/>
