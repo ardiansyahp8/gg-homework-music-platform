@@ -8,9 +8,10 @@ const Login = ()=>{
     const REDIRECT_URI = "http://localhost:3000/";
     const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
     const RESPONSE_TYPE = "token";
+    const SCOPE = "playlist-modify-private";
 
     const handleLogin = ()=>{
-        window.location = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`;
+        window.location = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
     }
     
     const handleLogout = ()=>{
@@ -33,14 +34,14 @@ const Login = ()=>{
         }, []
     )
     return(
-        <>
+        <div class="login-content">
         {
             (!login)?
-            <div className="Login-button" onClick={handleLogin} >Login To Spotipi</div>
+            <button onClick={handleLogin} >Login with Spotify Auth API</button>
             :
-            <div className="Logout-button" onClick={handleLogout} >Logout</div>
+            <button onClick={handleLogout} >Logout</button>
         }
-        </>
+        </div>
     );
 
 }

@@ -12,6 +12,7 @@ const Search = () => {
     const [tracks, setTracks] = useState([]);
     const [token, setToken] = useState([]);
     const [recent, setRecent] = useState([]);
+    const [selectedlist, setSelectedList] = useState([]);
 
 
     const handleInput = (e) => {
@@ -35,11 +36,17 @@ const Search = () => {
             setTracks(response.data.tracks.items);
         }
         catch (e) {
-            alert("Kamu belum login")
+            alert(`Kamu belum login ${e}`)
             console.error(e)
         }
 
     }
+
+    const handleKeyPress = e => {
+        if (e.key === "Enter") {
+            handleSubmit();
+        }
+    };
 
     useEffect(() => {
         const url = localStorage.getItem("access_token");
@@ -52,30 +59,34 @@ const Search = () => {
         }
     }, [])
     return (
-        <>
+        <div class="search-content">
+        <h1>Want to search for some songs? Find them here</h1>
             {(login)?
             <></>
             :
-            <h5>Tekan tombol login untuk melakukan pencarian</h5>
+            <h5>Tekan tombol Login agar dapat melakukan pencarian</h5>
             }
             <Login />
-            <br />
             {(login) ? (
                 <>
-                    <input type="text" onChange={handleInput} />
-                    <button onClick={handleSubmit}>Cari</button>
+                    <div class="search-form">
+                        <input type="text" onChange={handleInput} onKeyPress={handleKeyPress}/>
+                        <button onClick={handleSubmit}>Cari</button>
+                    </div>
                     <h1>Hasil pencarian : {keyword}</h1>
-                    <br />
                     <div className="Album-container">
 
                         {
                             tracks.map((item) => (
                                 <Track
-                                    key={item.id}
+                                    key={item.uri}
                                     albumName={item.album.name}
                                     songName={item.name}
+                                    uri={item.uri}
                                     url={item.album.images[0].url}
                                     artistName={item.artists[0].name}
+                                    setSelectedList={setSelectedList}
+                                    selectedlist={selectedlist}
                                 />
                             ))
                         }
@@ -96,9 +107,9 @@ const Search = () => {
                 </>
             )
                 :
-            <></>
+            <h2>Status: belum login</h2>
             }
-        </>
+        </div>
     )
 }
 

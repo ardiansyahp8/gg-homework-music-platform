@@ -7,14 +7,6 @@ import data from './Data';
 function App() {
   return (
     <div className="App">
-    {
-      data.map((item) => (
-        <Track
-          key={item.id}
-          item={item}
-        />
-      ))
-    }
     <br/>
     <Search />
     </div>

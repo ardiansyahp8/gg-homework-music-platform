@@ -3,38 +3,43 @@ import Image from "../UI/Image";
 
 import { useState, useEffect } from 'react';
 
-const Track = ({ item }) => {
+const Track = ({ albumName,songName,url,artistName,setSelectedList,selectedlist,uri }) => {
   const [selected, setSelected] = useState(false);
   const [urlSelected, setUrl] = useState("");
 
-  const handleSelect = () =>{
-      if(!selected){
-          setSelected(true);
-          setUrl(item.url);
-      }
-      else{
-          setSelected(false);
-          setUrl("");
-      }
+  const handleSelect = (data) =>{
+    if (selectedlist.includes(data)) {
+      const findIndex = selectedlist.findIndex((v) => v === data);
+      setSelectedList((prevData) => {
+        const newArr =[...prevData.slice(0, findIndex), ...prevData.slice(findIndex+1, prevData.length)];
+        return newArr
+      })
+    } else {
+      setSelectedList((prevData) => [...prevData, data])
+    } 
   }
+
   return (
     <div className='music-content'>
       <Image
-      title={item.name}
-      imgUrl={item.album.images[0].url}
+      title={songName}
+      imgUrl={url}
       width="175px"
       height="175px"
       />
-      <h2>{item.name}</h2>
-      <h3>{item.album.name}</h3>
-      <p>{item.artists[0].name}</p>
-      <h4>{item.id}</h4>
+      <h2>{songName}</h2>
+      <h3>{albumName}</h3>
+      <p>{artistName}</p>
       <div>
-    <div className='btn-select' onClick={handleSelect}>
-    {
-        (!selected)? `Select` : `Deselect`
-    }
-    </div>
+      <div
+      onClick={() => {
+        handleSelect(uri)
+      }}>
+      <Button
+        selectedlist={selectedlist}
+        uri={uri}
+      />
+      </div>
       </div>
     </div>
   );
