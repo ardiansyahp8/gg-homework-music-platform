@@ -14,12 +14,39 @@ code {
     monospace;
 }
 
+.Album-container {
+  display: block;
+  margin: auto;
+  width: 70%;
+}
+
+.Songs-container {
+  display: block;
+  box-sizing: border-box;
+}
+
+.Album-container-recent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Recent-container {
+  float: left;
+  padding: 20px;
+  width: 150px;
+  word-wrap: break-word;
+}
+
 .music-content {
-  margin: 75px auto;
+  padding: 10px;
+  float:left;
+  width: 47%
 }
 
 .music-content img {
   border-radius: 20px;
+  float:left; 
 }
 
 .music-content h2 {
@@ -40,6 +67,18 @@ code {
 .music-content p {
   font-size: 18px;
   font-weight: normal;
+}
+
+.music-info {
+  text-align: left;
+  float:left;
+  margin: 0px 0px 0px 20px;
+  line-height: 0.9;
+  width:50%;
+}
+
+.Recent-search {
+  clear: left;
 }
 
 .login-content button, .btn-select, .search-form button, .playlist-button button {
@@ -118,4 +157,30 @@ code {
 
 .input-group__error {
   color:rgb(252, 69, 69);
+}
+
+.homepage{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+@media(max-width:670px) {
+  .Album-container {
+    width: 95%;
+  }
+  .music-content {
+    width: 100%;
+  }
+  .music-info {
+    word-wrap: break-word;
+    max-width: 10em;
+  }
+  .playlist {
+    width:80%;
+    min-width: none;
+  }
+  .Album-container-recent {
+    display:block;
+  }
 }
