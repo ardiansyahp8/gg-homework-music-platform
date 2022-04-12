@@ -21,14 +21,16 @@ code {
 }
 
 .Songs-container {
-  display: block;
-  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 50% 50%; 
 }
 
 .Album-container-recent {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 70%;
+  margin: auto;
 }
 
 .Recent-container {
@@ -41,7 +43,6 @@ code {
 .music-content {
   padding: 10px;
   float:left;
-  width: 47%
 }
 
 .music-content img {
@@ -75,6 +76,12 @@ code {
   margin: 0px 0px 0px 20px;
   line-height: 0.9;
   width:50%;
+  display:flex;
+  flex-direction: column;
+}
+
+.music-info > * {
+  margin:10px 0px;
 }
 
 .Recent-search {
@@ -169,6 +176,9 @@ code {
   .Album-container {
     width: 95%;
   }
+  .Songs-container {
+    grid-template-columns: 100%; 
+  }
   .music-content {
     width: 100%;
   }
@@ -181,6 +191,7 @@ code {
     min-width: none;
   }
   .Album-container-recent {
-    display:block;
+    flex-wrap: wrap;
+    width: 100%
   }
 }
