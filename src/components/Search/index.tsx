@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch, connect } from 'react-redux';
+import { useEffect, useState, ChangeEvent } from "react";
+import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
 import { dataAccessToken } from '../../Data/Action.js';
 import Track from "../Track";
 import Login from "../Login";
@@ -8,19 +8,52 @@ import Play from '../Playlist/play.js';
 import { getUserProfile } from '../../Data/Profile.js';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-const axios = require('axios').default;
+import axios from "axios";
 
-const Search = ({tokencode})=> {
-    const token = useSelector(state => state.dataAccessToken.value); 
+type Searches = {
+    tokencode: string
+};
+  
+type Props = {
+    search: Searches;
+    users: User;
+};
+
+type User = {
+    id: string;
+};
+
+type itemKey = {
+    uri: string;
+    url: string;
+    album: {
+        name: string;
+        images: { url: string }[]
+    },
+    name: string,
+    artists: { name: string }[],
+    images: string; 
+}
+
+type itemKeyRecent = {
+    id: string;
+    img: string;
+    title: string;
+    artist: string;
+}
+
+const Search = ({search, users}:Props)=> {
+    const token = useSelector((state: RootStateOrAny) => state.dataAccessToken.value);
     const [login, setLogin] = useState(false);
     const [keyword, setKeyword] = useState("");
     const [tracks, setTracks] = useState([]);
     const [recent, setRecent] = useState([]);
     const [selectedlist, setSelectedList] = useState([]);
     const [user, setUser] = useState({});
+    const [userId, setUserId] = useState({});
     const dispatch = useDispatch();
 
-    const handleInput = (e) => {
+    const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
         setKeyword(e.target.value);
     }
 
@@ -47,14 +80,14 @@ const Search = ({tokencode})=> {
 
     }
 
-    const handleKeyPress = e => {
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             handleSubmit();
         }
     };
 
     useEffect(() => {
-        const accessTokenParams = tokencode;
+        const accessTokenParams = token;
 
         if (accessTokenParams !== null) {
             dispatch(dataAccessToken(accessTokenParams));
@@ -64,6 +97,7 @@ const Search = ({tokencode})=> {
                 const response = await getUserProfile(accessTokenParams);
     
                 setUser(response);
+                setUserId(response.id);
                 setLogin(true);
             } catch (e) {
                 //console.log('error');
@@ -71,7 +105,7 @@ const Search = ({tokencode})=> {
             }
         setUserProfile();
         }
-    }, [token, tokencode, dispatch]);
+    }, []);
 
     return (
         <div className="search-content">
@@ -80,7 +114,7 @@ const Search = ({tokencode})=> {
                 <>
                 <Play
                     accessToken={token}
-                    userId={user.id}
+                    userId={userId}
                     uriTracks={selectedlist}
                 />
                     <div className="search-form">
@@ -132,7 +166,7 @@ const Search = ({tokencode})=> {
                     <div className="Album-container">
                         <div className="Songs-container">
                             {
-                                tracks.map((item) => (
+                                tracks.map((item: itemKey) => (
                                     <Track
                                         key={item.uri}
                                         albumName={item.album.name}
@@ -151,12 +185,10 @@ const Search = ({tokencode})=> {
                         <br></br>
                         <h1>Riwayat Pencarian Sebelumnya</h1>
                         <div className="Album-container-recent">
-                            {recent.map((item) => (
+                            {recent.map((item: itemKeyRecent) => (
                                 <Recent
                                     key={item.id}
-                                    img={item.album.images[2].url}
-                                    title={item.name}
-                                    artist={item.artists[0].name}
+                                    recentsearch={item}
                                 />
                                 )
                             )
@@ -172,8 +204,5 @@ const Search = ({tokencode})=> {
         </div>
     )
 }
-const mapStateToProps = (state) => ({
-    token: state.token,
-  });
-  
-export default connect(mapStateToProps)(Search);
+
+export default Search;

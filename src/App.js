@@ -1,6 +1,6 @@
 import './App.css';
 import './App.css';
-import Search from "./components/Search";
+import Search from "./components/Search/index.tsx";
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import Home from './pages/Home/';

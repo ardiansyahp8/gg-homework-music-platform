@@ -1,9 +1,20 @@
 import Button from "../UI/Button";
 import Image from "../UI/Image";
+import { SetStateAction, Dispatch } from "react";
 
-const Track = ({ albumName,songName,url,artistName,setSelectedList,selectedlist,uri }) => {
+type Props = { 
+  albumName: string;
+  songName: string;
+  url: string;
+  artistName: string;
+  selectedlist: string[];
+  uri: string;
+  setSelectedList: Dispatch<SetStateAction<never[]>>;
+};
 
-  const handleSelect = (data) =>{
+const Track = ({ albumName,songName,url,artistName,setSelectedList,selectedlist,uri }:Props) => {
+
+  const handleSelect = (data: string) =>{
     if (selectedlist.includes(data)) {
       const findIndex = selectedlist.findIndex((v) => v === data);
       setSelectedList((prevData) => {
@@ -11,7 +22,9 @@ const Track = ({ albumName,songName,url,artistName,setSelectedList,selectedlist,
         return newArr
       })
     } else {
-      setSelectedList((prevData) => [...prevData, data])
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        setSelectedList((prevData) => [...prevData, data]) 
     } 
   }
 
