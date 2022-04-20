@@ -4,7 +4,7 @@ import { dataAccessToken } from '../../Data/Action.js';
 import Track from "../Track";
 import Login from "../Login";
 import Recent from "../RecentSearch";
-import Play from '../Playlist/play.js';
+import Play from '../Playlist/play';
 import { getUserProfile } from '../../Data/Profile.js';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
