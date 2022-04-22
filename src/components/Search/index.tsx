@@ -42,6 +42,7 @@ type itemKeyRecent = {
     artist: string;
 }
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const Search = ({search, users}:Props)=> {
     const token = useSelector((state: RootStateOrAny) => state.dataAccessToken.value);
     const [login, setLogin] = useState(false);
@@ -52,6 +53,7 @@ const Search = ({search, users}:Props)=> {
     const [user, setUser] = useState({});
     const [userId, setUserId] = useState({});
     const dispatch = useDispatch();
+    /* eslint-enable @typescript-eslint/no-unused-vars */
 
     const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
         setKeyword(e.target.value);
