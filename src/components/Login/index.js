@@ -22,7 +22,6 @@ const Login = ()=>{
         window.location = REDIRECT_URI;
     }
 
-
     useEffect(()=> {
         let url = window.location.hash;
         if(url.length > 0 ){
